@@ -192,13 +192,13 @@ cga_putc(int c)
 	}
 
 	// What is the purpose of this?
-	if (crt_pos >= CRT_SIZE) {
+	if (crt_pos >= CRT_SIZE) { // 显示字符超出CRT一屏可显示字符数
 		int i;
-
+		// 清除crt_buf中首行数据(2~n行移动到1~n+1行)
 		memmove(crt_buf, crt_buf + CRT_COLS, (CRT_SIZE - CRT_COLS) * sizeof(uint16_t));
-		for (i = CRT_SIZE - CRT_COLS; i < CRT_SIZE; i++)
+		for (i = CRT_SIZE - CRT_COLS; i < CRT_SIZE; i++) // 用空格擦除掉原来最后一行数据
 			crt_buf[i] = 0x0700 | ' ';
-		crt_pos -= CRT_COLS;
+		crt_pos -= CRT_COLS; // 显示位置跳到下一屏的起始
 	}
 
 	/* move that little blinky thing */
