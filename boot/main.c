@@ -40,7 +40,7 @@ bootmain(void)
 {
 	struct Proghdr *ph, *eph;
 
-	// read 1st page off disk
+	// read 1st page off disk 把最初的4M(512x8)读取到 ELFHDR 里面
 	readseg((uint32_t) ELFHDR, SECTSIZE*8, 0);
 
 	// is this a valid ELF?
@@ -53,6 +53,7 @@ bootmain(void)
 	for (; ph < eph; ph++)
 		// p_pa is the load address of this segment (as well
 		// as the physical address)
+		// 通常来说 memsz一定大于等于filesz，因为段在虚拟地址时许多未定义的变量并没有分配空间给它们
 		readseg(ph->p_pa, ph->p_memsz, ph->p_offset);
 
 	// call the entry point from the ELF header
