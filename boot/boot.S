@@ -80,7 +80,7 @@ spin:
 gdt: # 3个GDT表项,3x8=24 bytes
   SEG_NULL				# null seg
   SEG(STA_X|STA_R, 0x0, 0xffffffff)	  # code seg 起始地址为0x0,大小4G
-  SEG(STA_W, 0x0, 0xffffffff)	        # data seg SEG()子程序构造GDT表项(in mmu.h)
+  SEG(STA_W, 0x0, 0xffffffff)	        # data seg SEG子程序构造GDT表项(in mmu.h)
 
 gdtdesc:
   .word   0x17                            # sizeof(gdt) - 1 GDT表大小=24(0x18)
